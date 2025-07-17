@@ -56,61 +56,33 @@ export const CartProvider = ({ children }) => {
 
   // Load cart from localStorage on mount
   useEffect(() => {
-    const initializeCart = () => {
-      const savedCart = localStorage.getItem('cart');
-      const token = localStorage.getItem('token');
-      
-      console.log('🛒 CartContext: Initializing cart', { hasCart: !!savedCart, hasToken: !!token });
-      
-      // Only load cart if user is authenticated
-      if (savedCart && token) {
-        try {
-          const cartItems = JSON.parse(savedCart);
-          console.log('📦 CartContext: Loading saved cart items:', cartItems.length);
-          dispatch({ type: 'LOAD_CART', payload: cartItems });
-        } catch (error) {
-          console.error('❌ Error loading cart from localStorage:', error);
-        }
-      } else if (!token) {
-        // Clear cart if no token (user not authenticated)
-        console.log('🗑️ CartContext: No token found, clearing cart data');
-        localStorage.removeItem('cart');
-        dispatch({ type: 'CLEAR_CART' });
+    const savedCart = localStorage.getItem('cart');
+    const token = localStorage.getItem('token');
+    
+    // Only load cart if user is authenticated
+    if (savedCart && token) {
+      try {
+        const cartItems = JSON.parse(savedCart);
+        dispatch({ type: 'LOAD_CART', payload: cartItems });
+      } catch (error) {
+        console.error('Error loading cart from localStorage:', error);
       }
-    };
-
-    // Delay initialization slightly to let auth context initialize first
-    const timer = setTimeout(initializeCart, 100);
-    return () => clearTimeout(timer);
+    } else if (!token) {
+      // Clear cart if no token (user not authenticated)
+      localStorage.removeItem('cart');
+      dispatch({ type: 'CLEAR_CART' });
+    }
   }, []);
 
   // Save cart to localStorage whenever it changes
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if (token) {
+    if (token && state.items.length > 0) {
       localStorage.setItem('cart', JSON.stringify(state.items));
-    } else {
+    } else if (!token) {
       localStorage.removeItem('cart');
     }
   }, [state.items]);
-
-  // Monitor authentication changes and clear cart when user logs out
-  useEffect(() => {
-    const handleStorageChange = (e) => {
-      if (e.key === 'token' && !e.newValue) {
-        // Token was removed (user logged out)
-        dispatch({ type: 'CLEAR_CART' });
-        localStorage.removeItem('cart');
-      }
-    };
-
-    // Listen for storage changes
-    window.addEventListener('storage', handleStorageChange);
-
-    return () => {
-      window.removeEventListener('storage', handleStorageChange);
-    };
-  }, []);
 
   const addToCart = (product, onAuthRequired) => {
     // Check if user is authenticated
@@ -151,10 +123,8 @@ export const CartProvider = ({ children }) => {
   };
 
   const clearCartOnLogout = () => {
-    console.log('🗑️ CartContext: Clearing cart on logout');
     dispatch({ type: 'CLEAR_CART' });
     localStorage.removeItem('cart');
-    // Don't show toast for logout cart clearing
   };
 
   const getCartTotal = () => {

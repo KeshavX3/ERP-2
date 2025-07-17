@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 
@@ -6,15 +6,18 @@ import { useCart } from '../context/CartContext';
 const AuthCartSync = () => {
   const { isAuthenticated } = useAuth();
   const { clearCartOnLogout } = useCart();
+  const previousAuthState = useRef(isAuthenticated);
 
   useEffect(() => {
-    console.log('🔄 AuthCartSync: Authentication state changed:', isAuthenticated);
-    // Clear cart when user logs out
-    if (!isAuthenticated) {
-      console.log('🗑️ AuthCartSync: User not authenticated, clearing cart');
+    // Only clear cart when user goes from authenticated to not authenticated
+    if (previousAuthState.current === true && isAuthenticated === false) {
+      console.log('🗑️ AuthCartSync: User logged out, clearing cart');
       clearCartOnLogout();
     }
-  }, [isAuthenticated, clearCartOnLogout]);
+    
+    // Update the previous state
+    previousAuthState.current = isAuthenticated;
+  }, [isAuthenticated]); // Removed clearCartOnLogout from dependencies
 
   return null; // This component doesn't render anything
 };

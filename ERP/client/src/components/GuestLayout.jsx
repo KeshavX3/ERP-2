@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Navbar, Nav, Container, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import AuthModal from './AuthModal';
 
 const GuestLayout = ({ children }) => {
   const { getCartItemsCount } = useCart();
+  const location = useLocation();
+  const navigate = useNavigate();
   const [showAuthModal, setShowAuthModal] = useState(false);
 
   const handleCartClick = (e) => {
@@ -31,15 +33,15 @@ const GuestLayout = ({ children }) => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link as={Link} to="/products">
+              <Nav.Link as={Link} to="/products" className={location?.pathname === '/products' ? 'active' : ''}>
                 <i className="fas fa-box me-1"></i>
                 Products
               </Nav.Link>
-              <Nav.Link as={Link} to="/categories">
+              <Nav.Link as={Link} to="/categories" className={location?.pathname === '/categories' ? 'active' : ''}>
                 <i className="fas fa-tags me-1"></i>
                 Categories
               </Nav.Link>
-              <Nav.Link as={Link} to="/brands">
+              <Nav.Link as={Link} to="/brands" className={location?.pathname === '/brands' ? 'active' : ''}>
                 <i className="fas fa-award me-1"></i>
                 Brands
               </Nav.Link>

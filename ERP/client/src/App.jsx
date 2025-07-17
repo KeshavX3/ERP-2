@@ -68,33 +68,29 @@ function App() {
           <Route 
             path="/categories" 
             element={
-              <ErrorBoundary>
-                {isAuthenticated ? (
-                  <Layout>
-                    <Categories />
-                  </Layout>
-                ) : (
-                  <GuestLayout>
-                    <Categories />
-                  </GuestLayout>
-                )}
-              </ErrorBoundary>
+              isAuthenticated ? (
+                <Layout>
+                  <Categories />
+                </Layout>
+              ) : (
+                <GuestLayout>
+                  <Categories />
+                </GuestLayout>
+              )
             } 
           />
           <Route 
             path="/brands" 
             element={
-              <ErrorBoundary>
-                {isAuthenticated ? (
-                  <Layout>
-                    <Brands />
-                  </Layout>
-                ) : (
-                  <GuestLayout>
-                    <Brands />
-                  </GuestLayout>
-                )}
-              </ErrorBoundary>
+              isAuthenticated ? (
+                <Layout>
+                  <Brands />
+                </Layout>
+              ) : (
+                <GuestLayout>
+                  <Brands />
+                </GuestLayout>
+              )
             } 
           />
         
