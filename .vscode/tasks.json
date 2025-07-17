@@ -1,0 +1,29 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Start Backend",
+			"type": "shell",
+			"command": "npm",
+			"args": ["start"],
+			"options": {
+				"cwd": "${workspaceFolder}/ERP"
+			},
+			"group": "build",
+			"isBackground": true,
+			"problemMatcher": []
+		},
+		{
+			"label": "Start Frontend",
+			"type": "shell",
+			"command": "npm",
+			"args": ["run", "client"],
+			"options": {
+				"cwd": "${workspaceFolder}/ERP"
+			},
+			"group": "build",
+			"isBackground": true,
+			"problemMatcher": []
+		}
+	]
+}
