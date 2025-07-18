@@ -11,6 +11,7 @@ const googleAuthRoutes = require('./routes/googleAuth');
 const productRoutes = require('./routes/products');
 const categoryRoutes = require('./routes/categories');
 const brandRoutes = require('./routes/brands');
+const orderRoutes = require('./routes/orders');
 const uploadRoutes = require('./routes/upload');
 const placeholderRoutes = require('./routes/placeholder');
 
@@ -65,6 +66,7 @@ app.use('/api/auth', googleAuthRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/brands', brandRoutes);
+app.use('/api/orders', orderRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api', placeholderRoutes);
 

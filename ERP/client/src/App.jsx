@@ -14,6 +14,7 @@ import Products from './pages/Products';
 import Categories from './pages/Categories';
 import Brands from './pages/Brands';
 import Checkout from './pages/Checkout';
+import Orders from './pages/Orders';
 
 function App() {
   const { isAuthenticated, loading } = useAuth();
@@ -105,6 +106,18 @@ function App() {
                 </Layout>
               ) : (
                 <Navigate to="/login" state={{ from: '/checkout' }} />
+              )
+            } 
+          />
+          <Route 
+            path="/orders" 
+            element={
+              isAuthenticated ? (
+                <Layout>
+                  <Orders />
+                </Layout>
+              ) : (
+                <Navigate to="/login" state={{ from: '/orders' }} />
               )
             } 
           />

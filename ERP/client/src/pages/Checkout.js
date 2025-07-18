@@ -112,9 +112,11 @@ const Checkout = () => {
     setLoading(true);
     
     try {
-      // Simulate order processing
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
+      const deliveryEstimate = getDeliveryEstimate();
+      const estimatedDeliveryDate = new Date();
+      const deliveryDays = deliveryOption === 'express' ? 2 : deliveryOption === 'standard' ? 5 : 7;
+      estimatedDeliveryDate.setDate(estimatedDeliveryDate.getDate() + deliveryDays);
+
       const orderData = {
         items,
         shippingAddress,
@@ -124,10 +126,33 @@ const Checkout = () => {
         shipping: getShippingCost(),
         tax: getTax(),
         total: getFinalTotal(),
-        estimatedDelivery: getDeliveryEstimate().date
+        estimatedDelivery: estimatedDeliveryDate.toISOString()
       };
       
-      console.log('Order submitted:', orderData);
+      console.log('Sending order data:', orderData);
+      console.log('User token:', localStorage.getItem('token') ? 'Present' : 'Missing');
+      console.log('Cart items:', items);
+      
+      // Submit order to backend
+      const response = await fetch('/api/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify(orderData)
+      });
+
+      const result = await response.json();
+      
+      console.log('Backend response:', result);
+
+      if (!response.ok) {
+        console.error('Order creation failed:', result);
+        throw new Error(result.message || 'Failed to place order');
+      }
+      
+      console.log('Order created:', result.order);
       
       // Clear cart and show success
       clearCart();
@@ -137,13 +162,13 @@ const Checkout = () => {
       navigate('/products', { 
         state: { 
           orderSuccess: true, 
-          orderId: `ORD-${Date.now()}` 
+          orderId: result.order.formattedOrderId
         }
       });
       
     } catch (error) {
       console.error('Order submission error:', error);
-      toast.error('Failed to place order. Please try again.');
+      toast.error(error.message || 'Failed to place order. Please try again.');
     } finally {
       setLoading(false);
     }

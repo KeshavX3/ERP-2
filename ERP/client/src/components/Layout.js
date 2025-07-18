@@ -20,6 +20,7 @@ const ModernHeader = ({ onShowCart }) => {
     { path: '/products', label: 'Products', icon: 'fas fa-box' },
     { path: '/categories', label: 'Categories', icon: 'fas fa-tags' },
     { path: '/brands', label: 'Brands', icon: 'fas fa-award' },
+    { path: '/orders', label: 'My Orders', icon: 'fas fa-shopping-bag' },
   ];
 
   return (
