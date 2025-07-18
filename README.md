@@ -1,59 +1,131 @@
-# 🏢 ERP System - Complete Enterprise Resource Planning Solution
+# 🛒 ERP System - Modern E-Commerce Platform
 
-[![React](https://img.shields.io/badge/React-18.x-blue.svg)](https://reactjs.org/)
-[![Node.js](https://img.shields.io/badge/Node.js-20.x-green.svg)](https://nodejs.org/)
-[![MongoDB](https://img.shields.io/badge/MongoDB-7.x-green.svg)](https://mongodb.com/)
-[![Express](https://img.shields.io/badge/Express-4.x-lightgrey.svg)](https://expressjs.com/)
+<div align="center">
 
-A modern, full-stack ERP (Enterprise Resource Planning) system built with React.js, Node.js, Express, and MongoDB. Features comprehensive authentication, product management, email verification, and Google OAuth integration.
+![React](https://img.shields.io/badge/React-18.x-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![Node.js](https://img.shields.io/badge/Node.js-20.x-339933?style=for-the-badge&logo=node.js&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-7.x-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
+![Express](https://img.shields.io/badge/Express-4.x-000000?style=for-the-badge&logo=express&logoColor=white)
 
-## 🚀 **Features**
+**A complete e-commerce solution with cart, checkout, order management, and secure authentication**
 
-### 🔐 **Authentication & Security**
-- **Email OTP Verification** - Secure 6-digit OTP system with 10-minute expiration
-- **Google OAuth Integration** - One-click sign-in with Google accounts
-- **JWT Token Authentication** - Secure session management
-- **Password Encryption** - bcrypt hashing for secure password storage
-- **Role-based Access Control** - Admin and user roles with different permissions
+[🚀 Live Demo](#) • [📖 Documentation](#setup) • [🐛 Report Bug](#)
 
-### 📧 **Email System**
-- **Professional Email Templates** - Beautiful HTML emails with branding
-- **OTP Verification Emails** - Secure verification codes with security warnings
-- **Welcome Emails** - Automated welcome messages for new users
-- **Gmail SMTP Integration** - Reliable email delivery via Gmail
-
-### 🛍️ **Product Management**
-- **Product CRUD Operations** - Complete product lifecycle management
-- **Category Management** - Organize products by categories
-- **Brand Management** - Track product brands and manufacturers
-- **Image Upload** - Secure file upload with image optimization
-- **Guest Browsing** - Allow visitors to browse products without registration
-
-### 🎨 **User Experience**
-- **Responsive Design** - Mobile-first Bootstrap 5 interface
-- **Real-time Validation** - Instant form validation and feedback
-- **Loading States** - Professional loading indicators and progress bars
-- **Toast Notifications** - User-friendly success/error messages
-- **Dark/Light Themes** - Modern gradient designs and animations
+</div>
 
 ---
 
-## 📁 **Project Structure**
+## ✨ Features
 
+🔐 **Secure Authentication**
+- Email OTP verification & Google OAuth
+- JWT token-based sessions
+
+🛍️ **Complete Shopping Experience**
+- Product browsing & search
+- Shopping cart with real-time updates
+- Checkout with delivery tracking
+- Order history & management
+
+📦 **Admin Dashboard**
+- Product, category & brand management
+- File upload & image handling
+- User management & analytics
+
+🎨 **Modern UI/UX**
+- Responsive Bootstrap 5 design
+- Real-time notifications
+- Loading states & animations
+
+---
+
+## � Quick Start
+
+### Prerequisites
+- Node.js 18+ and npm
+- MongoDB database
+- Gmail account (for emails)
+
+### Installation
+
+```bash
+# 1. Clone the repository
+git clone <your-repo-url>
+cd ERP
+
+# 2. Install dependencies
+npm install
+cd client && npm install && cd ..
+
+# 3. Setup environment variables
+cp .env.example .env
+# Edit .env with your MongoDB, Gmail, and Google OAuth credentials
+
+# 4. Start the development servers
+npm run dev          # Backend (Port 5000)
+cd client && npm start   # Frontend (Port 3000)
 ```
-ERP/
-├── 📄 README.md                    # This comprehensive guide
-├── 📄 package.json                 # Backend dependencies
-├── 📄 .env                         # Environment variables
-├── 📄 .gitignore                   # Git ignore rules
-│
-├── 🔧 server/                      # Backend (Node.js + Express)
-│   ├── 📄 index.js                 # Main server file
-│   ├── 🔐 middleware/
-│   │   ├── auth.js                 # JWT authentication middleware
-│   │   └── upload.js               # File upload middleware
-│   ├── 🗃️ models/
-│   │   ├── User.js                 # User schema with OTP fields
+
+### Environment Variables
+
+Create a `.env` file in the root directory:
+
+```env
+# Database
+MONGODB_URI=mongodb://localhost:27017/erp_system
+
+# JWT Secret
+JWT_SECRET=your_super_secret_key_here
+
+# Email Configuration (Gmail)
+EMAIL_USER=your_gmail@gmail.com
+EMAIL_PASS=your_app_password
+
+# Google OAuth (Optional)
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+
+# Server
+PORT=5000
+NODE_ENV=development
+```
+
+---
+
+## 📱 Usage
+
+1. **Sign Up**: Create account with email verification
+2. **Browse**: Explore products by categories and brands
+3. **Shop**: Add items to cart and proceed to checkout
+4. **Track**: Monitor your orders and delivery status
+5. **Manage**: Admin can handle products, users, and orders
+
+---
+
+## 🛠️ Tech Stack
+
+**Frontend**: React.js, Bootstrap 5, Axios  
+**Backend**: Node.js, Express.js, JWT  
+**Database**: MongoDB with Mongoose  
+**File Upload**: Multer  
+**Email**: Nodemailer with Gmail SMTP  
+**Authentication**: Google OAuth 2.0
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+<div align="center">
+
+**Built with ❤️ using React.js, Node.js, Express.js, and MongoDB**
+
+⭐ Star this repo if you found it helpful!
+
+</div>
 │   │   ├── Product.js              # Product schema
 │   │   ├── Category.js             # Category schema
 │   │   └── Brand.js                # Brand schema
