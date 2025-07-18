@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Card, Form, Button, Alert } from 'react-bootstrap';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import GoogleAuthButton from '../components/GoogleAuthButton';
 
@@ -10,6 +10,10 @@ const Login = () => {
   const [error, setError] = useState('');
   const { login, googleAuth } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  
+  // Get the redirect path from location state, default to '/products'
+  const from = location.state?.from || '/products';
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -37,7 +41,7 @@ const Login = () => {
       if (response.ok) {
         // Successful login
         localStorage.setItem('token', data.token);
-        navigate('/products');
+        navigate(from); // Navigate to the intended destination
         window.location.reload(); // Refresh to update auth state
       } else if (data.needsVerification) {
         // User needs email verification

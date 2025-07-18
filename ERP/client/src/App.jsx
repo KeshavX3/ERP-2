@@ -13,6 +13,7 @@ import VerifyEmail from './pages/VerifyEmail';
 import Products from './pages/Products';
 import Categories from './pages/Categories';
 import Brands from './pages/Brands';
+import Checkout from './pages/Checkout';
 
 function App() {
   const { isAuthenticated, loading } = useAuth();
@@ -90,6 +91,20 @@ function App() {
                 <GuestLayout>
                   <Brands />
                 </GuestLayout>
+              )
+            } 
+          />
+          
+          {/* Protected Routes - Require authentication */}
+          <Route 
+            path="/checkout" 
+            element={
+              isAuthenticated ? (
+                <Layout>
+                  <Checkout />
+                </Layout>
+              ) : (
+                <Navigate to="/login" state={{ from: '/checkout' }} />
               )
             } 
           />

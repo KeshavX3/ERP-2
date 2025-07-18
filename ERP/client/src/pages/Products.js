@@ -43,10 +43,29 @@ const Products = () => {
     { value: '1000-5000', label: '$1,000 - $5,000' },
     { value: '5000-above', label: '$5,000 & Above' }
   ];
-  // Handle navigation state from Categories/Brands pages
+  // Handle navigation state from Categories/Brands pages and order success
   useEffect(() => {
     if (location.state) {
-      const { categoryFilter, brandFilter, categoryName, brandName } = location.state;
+      const { 
+        categoryFilter, 
+        brandFilter, 
+        categoryName, 
+        brandName,
+        orderSuccess,
+        orderId 
+      } = location.state;
+      
+      // Handle order success notification
+      if (orderSuccess && orderId) {
+        toast.success(
+          `🎉 Order ${orderId} placed successfully! Check your email for confirmation.`,
+          { autoClose: 5000 }
+        );
+        // Clear the location state to prevent repeated notifications
+        navigate(location.pathname, { replace: true });
+        return;
+      }
+      
       console.log('Navigation state received:', location.state);
       
       let newFilters = { ...filters };

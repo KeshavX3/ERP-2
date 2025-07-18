@@ -1,10 +1,24 @@
 import React from 'react';
 import { Offcanvas, Button, ListGroup, Badge, Form } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 import ImageWithFallback from './ImageWithFallback';
 
 const Cart = ({ show, onHide }) => {
   const { items, removeFromCart, updateQuantity, clearCart, getCartTotal } = useCart();
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+
+  const handleProceedToCheckout = () => {
+    if (!isAuthenticated) {
+      onHide(); // Close cart
+      navigate('/login', { state: { from: '/checkout' } });
+      return;
+    }
+    onHide(); // Close cart
+    navigate('/checkout');
+  };
 
   const formatPrice = (price) => {
     return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(price);
@@ -94,7 +108,12 @@ const Cart = ({ show, onHide }) => {
                 </Button>
               </div>
               <div className="d-grid gap-2">
-                <Button variant="primary" size="lg">
+                <Button 
+                  variant="primary" 
+                  size="lg"
+                  onClick={handleProceedToCheckout}
+                >
+                  <i className="fas fa-credit-card me-2"></i>
                   Proceed to Checkout
                 </Button>
                 <Button variant="outline-primary" onClick={onHide}>
